@@ -1,0 +1,201 @@
+---
+// src/components/SubServicios.astro
+import heroImage from '../assets/hero.png';
+
+const placeholderImg = heroImage.src;
+
+const data = {
+  equalizer: {
+    summary: "Nuestro servicio de ecualización y mezcla asegura que cada elemento sonoro tenga su espacio perfecto. Desde la claridad de los diálogos hasta la potencia de los graves, equilibramos el espectro para una experiencia auditiva inmersiva y profesional en cualquier dispositivo.",
+    services: [
+      { title: "Mezcla Estéreo & Surround", img: heroImage.src, link: "#" },
+      { title: "Mastering Digital", img: heroImage.src, link: "#" },
+      { title: "Edición de Diálogos", img: heroImage.src, link: "#" },
+      { title: "Restauración de Audio", img: heroImage.src, link: "#" }
+    ]
+  },
+  video: {
+    summary: "Transformamos la narrativa visual mediante procesos de postproducción de alta gama. El color grading aporta la atmósfera emocional, mientras que nuestra edición offline construye el ritmo perfecto para contar tu historia visualmente.",
+    services: [
+      { title: "Color Grading", img: placeholderImg, link: "#" },
+      { title: "Edición Offline", img: placeholderImg, link: "#" },
+      { title: "VFX Básicos", img: placeholderImg, link: "#" }
+    ]
+  },
+  sonido: {
+    summary: "Creamos mundos sonoros desde cero. El diseño sonoro no es solo lo que se ve, sino lo que se siente. Desde pasos y roces (Foley) hasta ambientes complejos que dan vida y realismo a cada escena.",
+    services: [
+      { title: "Foley & SFX", img: placeholderImg, link: "#" },
+      { title: "Diseño de Ambientes", img: placeholderImg, link: "#" }
+    ]
+  },
+  musica: {
+    summary: "La música es el alma de tu marca. Componemos piezas originales que definen tu identidad sonora o gestionamos las licencias necesarias para que tu proyecto suene exactamente como lo imaginaste, sin problemas legales.",
+    services: [
+      { title: "Composición Original", img: placeholderImg, link: "#" },
+      { title: "Licencias & Sync", img: placeholderImg, link: "#" }
+    ]
+  }
+};
+
+// DIFERENCIA CLAVE: Definimos la categoría por defecto para renderizarla en el servidor
+const defaultCategory = data.equalizer;
+const defaultTitle = "// EQUALIZER"; // O el nombre que uses en tus botones
+---
+
+<section id="display-area" class="zona-subservicios w-full max-w-7xl mx-auto px-6 fade-in pb-24 flex flex-col lg:flex-row gap-8 items-start">
+    
+    <div class="w-full lg:w-2/3 order-2 lg:order-1">
+        <h4 id="category-title" class="text-[#F1EE14] font-mono text-xl mb-6 uppercase tracking-widest border-l-4 border-[#F1EE14] pl-4">
+          {defaultTitle}
+        </h4>
+
+        <div id="cards-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+           {defaultCategory.services.map(service => (
+              <div class="service-card group">
+                  <div class="img-container">
+                    <img src={service.img} alt={service.title}>
+                  </div>
+                  <div class="card-overlay"></div> <h3 class="card-title">{service.title}</h3>
+              </div>
+           ))}
+        </div>
+    </div>
+
+    <div class="w-full lg:w-1/3 order-1 lg:order-2 bg-[#0a0a0a] border border-gray-800 p-6 rounded-xl sticky top-24">
+        <h5 class="text-white font-bold uppercase mb-4 text-sm tracking-wider flex items-center">
+            <span class="text-[#F1EE14] mr-2">//</span> Resumen de Categoría
+        </h5>
+        <p id="category-summary" class="text-gray-400 font-mono text-sm leading-relaxed">
+            {defaultCategory.summary}
+        </p>
+    </div>
+
+</section>
+
+<style>
+  /* --- ZONA DE EDICIÓN DE POSICIÓN --- */
+  .zona-subservicios {
+    /* Ajustes para el traslape */
+    margin-top: -275px; 
+    left: 250px; 
+    padding-top: 0;
+    position: relative; 
+    z-index: 20; 
+  }
+
+  .fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- ESTILOS GLOBALES PARA QUE EL JS NO LOS ROMPA --- */
+
+  :global(.service-card) {
+    position: relative;
+    background-color: #000;
+    border: 2px solid #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    height: 6rem; /* Mantiene la altura pequeña */
+  }
+
+  :global(.service-card:hover) {
+    border-color: #F1EE14;
+    box-shadow: 0 0 20px rgba(241, 238, 20, 0.2);
+  }
+
+  :global(.img-container) {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  :global(.service-card img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) brightness(0.7);
+    transition: all 0.5s ease;
+  }
+
+  :global(.service-card:hover img) {
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.05);
+  }
+
+  :global(.card-overlay) {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%);
+      z-index: 1;
+  }
+
+  :global(.card-title) {
+    position: absolute;
+    bottom: 0.8rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 2;
+    color: #FFF;
+    font-family: monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+    transition: color 0.3s;
+  }
+
+  :global(.service-card:hover .card-title) {
+    color: #F1EE14;
+  }
+</style>
+
+<script define:vars={{ data }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cardsContainer = document.getElementById('cards-container');
+    const categoryTitle = document.getElementById('category-title');
+    const categorySummary = document.getElementById('category-summary');
+    
+    // Asumimos que los triggers (botones) están en el Hero
+    const triggers = document.querySelectorAll('.service-trigger');
+
+    triggers.forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault(); 
+        
+        const categoryName = trigger.closest('.service-trigger').getAttribute('data-category');
+        const categoryData = data[categoryName];
+
+        if (categoryData) {
+          // 1. Actualizar Textos
+          categoryTitle.innerText = `// ${categoryName.toUpperCase()}`;
+          categorySummary.innerText = categoryData.summary;
+
+          // 2. Limpiar y generar nuevas tarjetas
+          cardsContainer.innerHTML = '';
+          
+          categoryData.services.forEach(service => {
+            const card = document.createElement('div');
+            card.className = 'service-card group'; // El CSS Global aplicará los estilos aquí
+            
+            card.innerHTML = `
+                <div class="img-container">
+                  <img src="${service.img}" alt="${service.title}">
+                </div>
+                <div class="card-overlay"></div> <h3 class="card-title">${service.title}</h3>
+            `;
+            
+            card.addEventListener('click', () => window.location.href = service.link);
+            cardsContainer.appendChild(card);
+          });
+        }
+      });
+    });
+  });
+</script>

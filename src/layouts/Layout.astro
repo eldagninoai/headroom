@@ -4,7 +4,11 @@ import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource/montserrat/900.css";
+import "@fontsource/space-mono/400.css";
+import "@fontsource/space-mono/700.css";
 import "../styles/global.css";
+
 
 export interface Props {
   title: string;
@@ -55,7 +59,7 @@ const makeTitle = title
       }}
     />
   </head>
-  <body>
+    <body class="bg-black text-white">
     <Navbar />
     <slot />
     <Footer />

@@ -1,53 +1,155 @@
 ---
-import { Picture } from "astro:assets";
-import heroImage from "@/assets/hero.png";
-import Link from "@/components/ui/link.astro";
-import { Icon } from "astro-icon/components";
+// src/components/Hero.astro
+
+// CONFIGURACIÓN INICIAL:
+// 1. EQUALIZER: nace activo (active: true)
+// 2. VIDEO: nace parpadeando (suggested: true)
+const services = [
+  { title: "SERVICE EQUALIZER", icon: "IlIl", active: true, category: "equalizer", suggested: false },
+  { title: "PRODUCCIÓN VIDEO", icon: "📹", active: false, category: "video", suggested: true },
+  { title: "DISEÑO SONORO", icon: "🔊", active: false, category: "sonido", suggested: false },
+  { title: "MÚSICA & BRANDING", icon: "🎵", active: false, category: "musica", suggested: false },
+];
+
+// Definimos las clases aquí para usarlas tanto en el HTML como referencia
+const activeStyle = "bg-[#F1EE14] border-[#F1EE14] text-black shadow-[0_0_25px_rgba(241,238,20,0.6)]";
+const inactiveStyle = "bg-transparent border-gray-800 text-gray-500 hover:border-[#F1EE14] hover:bg-gray-900 hover:text-white";
 ---
 
-<main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24">
-  <div class="py-6 md:order-1 hidden md:block">
-    <Picture
-      src={heroImage}
-      alt="Astronaut in the air"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 800px) 100vw, 620px"
-      loading="eager"
-      format="avif"
-    />
-  </div>
-  <div>
-    <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
-      Marketing website done with Astro
-    </h1>
-    <p class="text-lg mt-4 text-slate-600 max-w-xl">
-      Astroship is a starter template for startups, marketing websites & landing
-      pages.<wbr /> Built with Astro.build and TailwindCSS. You can quickly create
-      any website with this starter.
-    </p>
-    <div class="mt-6 flex flex-col sm:flex-row gap-3">
-      <Link
-        href="#"
-        href="https://web3templates.com/templates/astroship-starter-website-template-for-astro"
-        target="_blank"
-        class="flex gap-1 items-center justify-center"
-        rel="noopener">
-        <Icon class="text-white w-5 h-5" name="bx:bxs-cloud-download" />
+<main class="relative pt-12 pb-20 md:pt-24 md:pb-40 overflow-hidden">
+  <div class="w-full px-6 md:px-12 lg:px-20">
+    
+    <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+      
+      <div class="relative z-10">
+        <h1 class="text-6xl md:text-7xl lg:text-9xl font-black uppercase leading-[0.85] text-white tracking-tight mb-8">
+          Agencia de Audio<br/>
+          <span class="text-gray-600">Profesional</span>
+        </h1>
+        
+        <p class="font-mono text-gray-400 text-sm md:text-base mb-10 max-w-lg tracking-wide">
+          IDENTIDAD SONORA Y VISUAL PARA MARCAS LÍDERES.
+        </p>
 
-        Download for Free
-      </Link>
-      <Link
-        size="lg"
-        style="outline"
-        rel="noopener"
-        href="https://github.com/surjithctly/astroship"
-        class="flex gap-1 items-center justify-center"
-        target="_blank">
-        <Icon class="text-black w-4 h-4" name="bx:bxl-github" />
-        GitHub Repo
-      </Link>
+        <a href="#" class="inline-block bg-[#F1EE14] hover:bg-white hover:scale-105 transform text-black font-bold uppercase tracking-wider py-4 px-12 text-sm transition-all duration-300 shadow-[0_0_20px_rgba(241,238,20,0.4)]">
+          Explora el Espectro &rarr;
+        </a>
+      </div>
+
+      <div class="relative z-10 w-full">
+        
+        <h3 class="font-mono text-gray-400 text-xs uppercase tracking-[0.2em] mb-8 text-center lg:text-left border-b border-gray-800 pb-4">
+          Service Equalizer
+        </h3>
+        
+        <div class="flex justify-between gap-2 md:gap-4">
+          {services.map((service) => (
+            <div 
+              class="flex flex-col items-center group cursor-pointer w-full service-trigger" 
+              data-category={service.category}
+            >
+              <div class={`
+                w-20 h-20 md:w-28 md:h-28 lg:w-40 lg:h-40 rounded-full flex items-center justify-center transition-all duration-300 border-2
+                ${service.active ? activeStyle : inactiveStyle}
+                ${service.suggested ? 'hint-animation' : ''}
+              `}>
+                <span class="text-2xl md:text-4xl lg:text-5xl font-bold">
+                  {service.icon === "IlIl" ? "||||" : service.icon}
+                </span>
+              </div>
+              
+              <div class="mt-6 text-center h-12 flex items-start justify-center">
+                 <p class="text-[10px] md:text-xs font-mono font-bold uppercase text-gray-500 group-hover:text-[#F1EE14] leading-tight w-28">
+                  {service.title}
+                 </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+      </div>
+
     </div>
   </div>
 </main>
+
+<style>
+  /* Animación de "Latido" para sugerir clic */
+  @keyframes pulse-yellow {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 rgba(241, 238, 20, 0);
+      border-color: #1f2937; /* gray-800 */
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(241, 238, 20, 0.5);
+      border-color: #F1EE14;
+      color: #FFF;
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 rgba(241, 238, 20, 0);
+      border-color: #1f2937;
+    }
+  }
+
+  .hint-animation {
+    animation: pulse-yellow 2s infinite ease-in-out;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.service-trigger');
+    
+    // NOTA: Estas clases deben coincidir EXACTAMENTE con las constantes de arriba
+    // para que el script pueda ponerlas y quitarlas correctamente.
+    
+    const activeClasses = [
+        'bg-[#F1EE14]', 
+        'border-[#F1EE14]', 
+        'shadow-[0_0_25px_rgba(241,238,20,0.6)]', 
+        'text-black'
+    ];
+
+    const inactiveClasses = [
+        'bg-transparent', 
+        'border-gray-800', 
+        'text-gray-500', 
+        'hover:border-[#F1EE14]', 
+        'hover:bg-gray-900', 
+        'hover:text-white'
+    ];
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        // 1. DETENER ANIMACIÓN SUGERIDA (del 2do círculo)
+        const animatedEl = document.querySelector('.hint-animation');
+        if (animatedEl) {
+            animatedEl.classList.remove('hint-animation');
+            animatedEl.style.animation = 'none';
+        }
+
+        // 2. Lógica de selección
+        const clickedCircle = btn.querySelector('div');
+        if (!clickedCircle) return;
+
+        // Resetear TODOS a estilo inactivo
+        buttons.forEach(otherBtn => {
+            const circle = otherBtn.querySelector('div');
+            if(circle) {
+                circle.classList.remove(...activeClasses);
+                // Solo agregamos las inactivas si no las tiene ya
+                // (esto evita duplicados, aunque classList suele manejarlo bien)
+                circle.classList.add(...inactiveClasses);
+            }
+        });
+
+        // Activar SOLO el clickeado
+        clickedCircle.classList.remove(...inactiveClasses);
+        clickedCircle.classList.add(...activeClasses);
+      });
+    });
+  });
+</script>
