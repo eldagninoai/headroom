@@ -1,9 +1,6 @@
 ---
 // src/components/Hero.astro
 
-// CONFIGURACIÓN INICIAL:
-// 1. EQUALIZER: nace activo (active: true)
-// 2. VIDEO: nace parpadeando (suggested: true)
 const services = [
   { title: "SERVICE EQUALIZER", icon: "IlIl", active: true, category: "equalizer", suggested: false },
   { title: "PRODUCCIÓN VIDEO", icon: "📹", active: false, category: "video", suggested: true },
@@ -11,59 +8,63 @@ const services = [
   { title: "MÚSICA & BRANDING", icon: "🎵", active: false, category: "musica", suggested: false },
 ];
 
-// Definimos las clases aquí para usarlas tanto en el HTML como referencia
 const activeStyle = "bg-[#F1EE14] border-[#F1EE14] text-black shadow-[0_0_25px_rgba(241,238,20,0.6)]";
 const inactiveStyle = "bg-transparent border-gray-800 text-gray-500 hover:border-[#F1EE14] hover:bg-gray-900 hover:text-white";
 ---
 
-<main class="relative pt-12 pb-20 md:pt-24 md:pb-40 overflow-hidden">
-  <div class="w-full px-6 md:px-12 lg:px-20">
+<section class="relative w-full overflow-hidden hero-padding">
+  
+  <div class="w-full hero-container-padding">
     
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+    <div class="grid grid-cols-1 min-[1025px]:grid-cols-2 gap-[8vw] min-[1025px]:gap-[5vw] items-start">
       
-      <div class="relative z-10">
-        <h1 class="text-6xl md:text-7xl lg:text-9xl font-black uppercase leading-[0.85] text-white tracking-tight mb-8">
+      <div class="relative z-10 flex flex-col justify-center items-center text-center min-[1025px]:items-start min-[1025px]:text-left">
+        
+        <h1 class="font-jost font-black uppercase leading-[0.9] text-white mb-[3vh] hero-title">
           Agencia de Audio<br/>
-          <span class="text-gray-600">Profesional</span>
+          <span class="font-black text-gray-600">Profesional</span>
         </h1>
         
-        <p class="font-mono text-gray-400 text-sm md:text-base mb-10 max-w-lg tracking-wide">
+        <p class="font-mono text-gray-400 mb-[4vh] tracking-wide hero-desc">
           IDENTIDAD SONORA Y VISUAL PARA MARCAS LÍDERES.
         </p>
 
-        <a href="#" class="inline-block bg-[#F1EE14] hover:bg-white hover:scale-105 transform text-black font-bold uppercase tracking-wider py-4 px-12 text-sm transition-all duration-300 shadow-[0_0_20px_rgba(241,238,20,0.4)]">
-          Explora el Espectro &rarr;
-        </a>
+        <div>
+            <a href="#contacto" class="inline-block bg-[#F1EE14] hover:bg-white hover:scale-105 transform text-black font-bold uppercase tracking-wider py-[1.5vh] px-[6vw] min-[1025px]:py-[2vh] min-[1025px]:px-[3vw] hero-btn transition-all duration-300 shadow-[0_0_20px_rgba(241,238,20,0.4)]">
+            Explora el Espectro &rarr;
+            </a>
+        </div>
       </div>
 
-      <div class="relative z-10 w-full">
+      <div class="relative z-10 w-full mt-[6vh] min-[1025px]:mt-0">
         
-        <h3 class="font-mono text-gray-400 text-xs uppercase tracking-[0.2em] mb-8 text-center lg:text-left border-b border-gray-800 pb-4">
+        <h3 class="font-mono text-gray-400 uppercase tracking-[0.2em] mb-[4vh] text-center min-[1025px]:text-left border-b border-gray-800 pb-[2vh] hero-subtitle">
           Service Equalizer
         </h3>
         
-        <div class="flex justify-between gap-2 md:gap-4">
+        <div class="flex justify-between gap-[2vw] min-[1025px]:gap-[1vw]">
           {services.map((service) => (
-            <div 
-              class="flex flex-col items-center group cursor-pointer w-full service-trigger" 
+            <button 
+              class="flex flex-col items-center group cursor-pointer w-full service-trigger bg-transparent border-none p-0" 
               data-category={service.category}
+              type="button"
             >
               <div class={`
-                w-20 h-20 md:w-28 md:h-28 lg:w-40 lg:h-40 rounded-full flex items-center justify-center transition-all duration-300 border-2
+                hero-circle rounded-full flex items-center justify-center transition-all duration-300 border-2
                 ${service.active ? activeStyle : inactiveStyle}
                 ${service.suggested ? 'hint-animation' : ''}
               `}>
-                <span class="text-2xl md:text-4xl lg:text-5xl font-bold">
+                <span class="hero-icon font-bold">
                   {service.icon === "IlIl" ? "||||" : service.icon}
                 </span>
               </div>
               
-              <div class="mt-6 text-center h-12 flex items-start justify-center">
-                 <p class="text-[10px] md:text-xs font-mono font-bold uppercase text-gray-500 group-hover:text-[#F1EE14] leading-tight w-28">
+              <div class="mt-[2vh] text-center min-[1025px]:h-[3vw] flex items-start justify-center">
+                 <span class="font-mono font-bold uppercase text-gray-500 group-hover:text-[#F1EE14] leading-tight hero-label">
                   {service.title}
-                 </p>
+                 </span>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -71,84 +72,106 @@ const inactiveStyle = "bg-transparent border-gray-800 text-gray-500 hover:border
 
     </div>
   </div>
-</main>
+</section>
 
 <style>
-  /* Animación de "Latido" para sugerir clic */
-  @keyframes pulse-yellow {
-    0% {
-      transform: scale(1);
-      box-shadow: 0 0 0 rgba(241, 238, 20, 0);
-      border-color: #1f2937; /* gray-800 */
+  /* --- ESTILOS RESPONSIVOS --- */
+  
+  .hero-padding {
+    padding-top: 10vh;
+    padding-bottom: 0vh;
+  }
+  .hero-container-padding {
+    padding-left: 6vw;
+    padding-right: 6vw;
+  }
+
+  /* MÓVIL (iPad Vertical incluido) */
+  .hero-title {
+    font-size: 13vw; 
+  }
+  .hero-desc {
+    font-size: 3.5vw;
+    max-width: 100%; 
+  }
+  .hero-btn {
+    font-size: 3.5vw;
+  }
+  .hero-subtitle {
+    font-size: 3vw;
+  }
+  .hero-circle {
+    width: 20vw;
+    height: 20vw;
+  }
+  .hero-icon {
+    font-size: 7vw;
+  }
+  .hero-label {
+    font-size: 2.2vw;
+    display: block;
+    width: 100%;
+  }
+
+  /* --- MEDIA QUERY: ESCRITORIO (1025px+) --- */
+  @media (min-width: 1025px) {
+    
+    .hero-padding {
+      padding-top: 18vh;
+      padding-bottom: 15vh;
     }
-    50% {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(241, 238, 20, 0.5);
-      border-color: #F1EE14;
-      color: #FFF;
+    .hero-container-padding {
+      padding-left: 4.2vw;
+      padding-right: 4.2vw;
     }
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 0 rgba(241, 238, 20, 0);
-      border-color: #1f2937;
+
+    .hero-title { font-size: 6.3vw; } 
+    .hero-desc  { font-size: 0.85vw; max-width: 30vw; }
+    .hero-btn   { font-size: 0.75vw; }
+    .hero-subtitle { font-size: 0.65vw; }
+
+    .hero-circle {
+      width: 8.35vw;
+      height: 8.35vw;
+    }
+    .hero-icon { font-size: 2.5vw; }
+    
+    .hero-label {
+      font-size: 0.65vw;
+      width: 6vw;
     }
   }
 
-  .hint-animation {
-    animation: pulse-yellow 2s infinite ease-in-out;
+  /* --- ANIMACIONES --- */
+  @keyframes pulse-yellow {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(241, 238, 20, 0); border-color: #1f2937; }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(241, 238, 20, 0.5); border-color: #F1EE14; color: #FFF; }
+    100% { transform: scale(1); box-shadow: 0 0 0 rgba(241, 238, 20, 0); border-color: #1f2937; }
   }
+
+  .hint-animation { animation: pulse-yellow 2s infinite ease-in-out; }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('.service-trigger');
-    
-    // NOTA: Estas clases deben coincidir EXACTAMENTE con las constantes de arriba
-    // para que el script pueda ponerlas y quitarlas correctamente.
-    
-    const activeClasses = [
-        'bg-[#F1EE14]', 
-        'border-[#F1EE14]', 
-        'shadow-[0_0_25px_rgba(241,238,20,0.6)]', 
-        'text-black'
-    ];
-
-    const inactiveClasses = [
-        'bg-transparent', 
-        'border-gray-800', 
-        'text-gray-500', 
-        'hover:border-[#F1EE14]', 
-        'hover:bg-gray-900', 
-        'hover:text-white'
-    ];
+    const activeClasses = ['bg-[#F1EE14]', 'border-[#F1EE14]', 'shadow-[0_0_25px_rgba(241,238,20,0.6)]', 'text-black'];
+    const inactiveClasses = ['bg-transparent', 'border-gray-800', 'text-gray-500', 'hover:border-[#F1EE14]', 'hover:bg-gray-900', 'hover:text-white'];
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', (e) => {
-        // 1. DETENER ANIMACIÓN SUGERIDA (del 2do círculo)
         const animatedEl = document.querySelector('.hint-animation');
-        if (animatedEl) {
-            animatedEl.classList.remove('hint-animation');
-            animatedEl.style.animation = 'none';
-        }
+        if (animatedEl) { animatedEl.classList.remove('hint-animation'); animatedEl.style.animation = 'none'; }
 
-        // 2. Lógica de selección
-        const clickedCircle = btn.querySelector('div');
+        const clickedCircle = btn.querySelector('.hero-circle'); 
         if (!clickedCircle) return;
 
-        // Resetear TODOS a estilo inactivo
         buttons.forEach(otherBtn => {
-            const circle = otherBtn.querySelector('div');
-            if(circle) {
-                circle.classList.remove(...activeClasses);
-                // Solo agregamos las inactivas si no las tiene ya
-                // (esto evita duplicados, aunque classList suele manejarlo bien)
-                circle.classList.add(...inactiveClasses);
-            }
+            const circle = otherBtn.querySelector('.hero-circle');
+            if(circle) { circle.classList.remove(...activeClasses); circle.classList.add(...inactiveClasses); }
         });
 
-        // Activar SOLO el clickeado
-        clickedCircle.classList.remove(...inactiveClasses);
-        clickedCircle.classList.add(...activeClasses);
+        clickedCircle.classList.remove(...inactiveClasses); clickedCircle.classList.add(...activeClasses);
       });
     });
   });

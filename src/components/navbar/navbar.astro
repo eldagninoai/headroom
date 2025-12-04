@@ -1,99 +1,148 @@
 ---
-import Container from "@/components/container.astro";
-import Link from "@/components/ui/link.astro";
-import Dropdown from "./dropdown.astro";
-import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+// src/components/Navbar.astro
 
-const menuitems = [
-  {
-    title: "Features",
-    path: "#",
+const menuItems = [
+  { title: "Inicio", path: "/" },
+  { title: "Nosotros", path: "/about" },
+  { 
+    title: "Servicios", 
+    path: "#servicios", 
     children: [
-      { title: "Action", path: "/" },
-      { title: "Another action", path: "#" },
-      { title: "Dropdown Submenu", path: "#" },
-      { title: "404 Page", path: "/404" },
-    ],
+      { title: "Equalizer (Mezcla & Mastering)", path: "#equalizer" },
+      { title: "Producción de Video", path: "#video" },
+      { title: "Diseño Sonoro", path: "#sonido" },
+      { title: "Música & Branding", path: "#musica" },
+    ]
   },
-  {
-    title: "Pricing",
-    path: "/pricing",
-  },
-  {
-    title: "About",
-    path: "/about",
-  },
-  {
-    title: "Blog",
-    path: "/blog",
-  },
-  {
-    title: "Contact",
-    path: "/contact",
-  },
-  {
-    title: "Pro Version",
-    badge: true,
-    path: "https://astroship-pro.web3templates.com/",
-  },
+  { title: "Blog", path: "/blog" },
 ];
 ---
 
-<Container>
-  <header class="flex flex-col lg:flex-row justify-between items-center my-5">
-    <Astronav>
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg"
-          ><span class="font-bold text-slate-800">Astro</span><span
-            class="text-slate-500">ship</span
-          >
-        </a>
-        <div class="block lg:hidden">
-          <MenuIcon class="w-4 h-4 text-gray-800" />
-        </div>
-      </div>
-      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
-          {
-            menuitems.map((item, index) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.title}
-                    children={item.children}
-                    lastItem={index === menuitems.length - 1}
-                  />
-                )}
+<header class="fixed top-0 left-0 w-full z-50 bg-black/90 backdrop-blur-md transition-all duration-300">
+  
+  <div class="flex flex-col min-[1025px]:flex-row justify-between items-center w-full px-[6vw] min-[1025px]:px-[4.2vw] py-[2vh]">
+    
+    <div class="flex w-full min-[1025px]:w-auto items-center justify-between">
+      
+      <a href="/" class="fluid-logo font-black tracking-tighter uppercase text-white hover:text-[#F1EE14] transition-colors">
+        Headroom<span class="text-[#F1EE14]">SOUND</span>
+      </a>
+      
+      <button id="menu-toggle" class="block min-[1025px]:hidden text-white focus:outline-none">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+      </button>
 
-                {!item.children && (
-                  <li>
-                    <a
-                      href={item.path}
-                      class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
-                      <span> {item.title}</span>
-                      {item.badge && (
-                        <span class="ml-1 px-2 py-0.5 text-[10px] animate-pulse font-semibold uppercase text-white bg-indigo-600 rounded-full">
-                          New
-                        </span>
-                      )}
-                    </a>
-                  </li>
-                )}
-              </>
-            ))
-          }
-        </ul>
-        <div class="lg:hidden flex items-center mt-3 gap-4">
-          <Link href="#" style="muted" block size="md">Log in</Link>
-          <Link href="#" size="md" block>Sign up</Link>
-        </div>
-      </MenuItems>
-    </Astronav>
-    <div>
-      <div class="hidden lg:flex items-center gap-4">
-        <a href="#">Log in</a>
-        <Link href="#" size="md">Sign up</Link>
-      </div>
     </div>
-  </header>
-</Container>
+
+    <nav id="nav-content" class="hidden w-full min-[1025px]:w-auto min-[1025px]:flex flex-col min-[1025px]:flex-row items-center gap-[4vw] min-[1025px]:gap-[2.5vw] mt-4 min-[1025px]:mt-0">
+      
+      <ul class="flex flex-col min-[1025px]:flex-row items-center gap-[2vw] w-full min-[1025px]:w-auto">
+        {menuItems.map((item) => (
+          <>
+            {item.children ? (
+              /* --- DROPDOWN (SERVICIOS) --- */
+              <li class="relative group text-center min-[1025px]:text-left w-full min-[1025px]:w-auto">
+                <button class="flex items-center justify-center min-[1025px]:justify-start gap-1 fluid-link text-gray-400 hover:text-white uppercase tracking-widest font-mono py-2 w-full min-[1025px]:w-auto dropdown-trigger">
+                  {item.title}
+                  <svg class="w-4 h-4 group-hover:rotate-180 transition-transform hidden min-[1025px]:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                  <svg class="w-4 h-4 min-[1025px]:hidden ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                
+                <div class="mobile-dropdown hidden min-[1025px]:absolute min-[1025px]:hidden min-[1025px]:group-hover:block top-full left-1/2 min-[1025px]:-translate-x-1/2 pt-4 w-full min-[1025px]:w-[20vw] bg-transparent">
+                   <div class="bg-[#0a0a0a] border border-gray-800 rounded-xl p-4 shadow-2xl flex flex-col gap-2">
+                      {item.children.map(child => (
+                        <a href={child.path} class="block text-gray-400 hover:text-[#F1EE14] text-sm font-mono uppercase text-center min-[1025px]:text-left">
+                          {child.title}
+                        </a>
+                      ))}
+                   </div>
+                </div>
+              </li>
+            ) : (
+              /* --- LINK NORMAL --- */
+              <li class="w-full min-[1025px]:w-auto text-center">
+                <a href={item.path} class="fluid-link text-gray-400 hover:text-white uppercase tracking-widest font-mono py-2 block">
+                  {item.title}
+                </a>
+              </li>
+            )}
+          </>
+        ))}
+      </ul>
+
+      <div class="flex items-center mt-4 min-[1025px]:mt-0 w-full min-[1025px]:w-auto justify-center">
+        <a href="/contact" class="inline-block bg-[#F1EE14] hover:bg-white text-black font-bold uppercase tracking-wider py-[1vh] px-[2vw] fluid-btn transition-all duration-300 rounded-sm">
+          Contacto
+        </a>
+      </div>
+
+    </nav>
+
+  </div>
+</header>
+
+<style>
+  /* --- TIPOGRAFÍA FLUIDA --- */
+  
+  /* Logo */
+  .fluid-logo {
+    /* Móvil/Tablet: 6vw */
+    font-size: clamp(1.5rem, 6vw, 2rem); 
+  }
+  
+  /* Links del Menú */
+  .fluid-link {
+    font-size: 4vw; /* Móvil */
+  }
+
+  /* Botón Contacto */
+  .fluid-btn {
+    font-size: 3.5vw;
+  }
+
+  /* --- AJUSTES ESCRITORIO (1025px+) --- */
+  @media (min-width: 1025px) {
+    .fluid-logo { font-size: 1.5vw; }
+    .fluid-link { font-size: 0.85vw; }
+    .fluid-btn  { font-size: 0.75vw; }
+
+    /* Lógica de Dropdown en Desktop (Hover) */
+    .mobile-dropdown {
+        display: none; 
+    }
+    .group:hover .mobile-dropdown {
+        display: block; 
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuToggle = document.getElementById('menu-toggle');
+    const navContent = document.getElementById('nav-content');
+    
+    // Toggle Menú Hamburguesa
+    menuToggle.addEventListener('click', () => {
+      navContent.classList.toggle('hidden');
+      
+      if (!navContent.classList.contains('hidden')) {
+        navContent.classList.add('h-screen', 'pb-20'); 
+      } else {
+        navContent.classList.remove('h-screen', 'pb-20');
+      }
+    });
+
+    // Toggle Dropdown en Móvil (Click)
+    const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
+    dropdownTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            // CORRECCIÓN JS: Solo actuar si la pantalla es menor a 1025px
+            if (window.innerWidth < 1025) {
+                e.preventDefault();
+                const dropdown = trigger.nextElementSibling;
+                dropdown.classList.toggle('hidden');
+            }
+        });
+    });
+  });
+</script>

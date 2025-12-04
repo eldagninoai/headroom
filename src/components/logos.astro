@@ -1,18 +1,113 @@
 ---
-// @ts-ignore
-import { Icon } from "astro-icon/components";
+// src/components/Brands.astro
+
+// Aquí pondrás tus logos reales (preferiblemente SVGs que descargues)
+// Por ahora uso placeholders de marcas conocidas para que veas el efecto.
+const brands = [
+  { name: "Shure", img: "https://upload.wikimedia.org/wikipedia/commons/c/c7/Shure_Inc_Logo.svg" },
+  { name: "Yamaha", img: "https://upload.wikimedia.org/wikipedia/commons/6/69/Yamaha_Music_logo.svg" },
+  { name: "JBL", img: "https://upload.wikimedia.org/wikipedia/commons/b/b2/JBL_logo.svg" },
+  { name: "Sennheiser", img: "https://upload.wikimedia.org/wikipedia/commons/2/23/Sennheiser_logo.svg" },
+  { name: "HK Audio", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/HK_Audio_logo.svg/2560px-HK_Audio_logo.svg.png" }, // Este es PNG, funciona igual
+  { name: "Hercules", img: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Hercules_Logo.svg" },
+  { name: "Pioneer DJ", img: "https://upload.wikimedia.org/wikipedia/commons/4/46/Pioneer_DJ_logo.svg" },
+];
+
+// Duplicamos el array para lograr el efecto infinito sin cortes
+const infiniteBrands = [...brands, ...brands];
 ---
 
-<div class="mt-24">
-  <h2 class="text-center text-slate-500">Works with your technologies</h2>
-  <div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap">
-
-    <Icon class="size-8 md:size-12" name="simple-icons:react" />
-    <Icon class="size-8 md:size-12" name="simple-icons:svelte" />
-    <Icon class="size-8 md:size-12" name="simple-icons:astro" />
-    <Icon class="size-8 md:size-16" name="simple-icons:tailwindcss" />
-    <Icon class="size-8 md:size-16" name="simple-icons:alpinedotjs" />
-    <Icon class="size-8 md:size-12" name="simple-icons:vercel" />
-
+<section class="w-full bg-black brands-padding overflow-hidden relative border-t border-gray-900">
+  
+  <div class="text-center mb-[4vh]">
+    <h3 class="text-gray-500 font-mono uppercase tracking-[0.3em] fluid-subtitle">
+      Powered By
+    </h3>
   </div>
-</div>
+
+  <div class="slider relative w-full overflow-hidden">
+    
+    <div class="absolute inset-0 z-10 pointer-events-none fade-mask"></div>
+
+    <div class="slide-track flex items-center gap-[8vw] min-[1025px]:gap-[5vw]">
+      
+      {infiniteBrands.map((brand) => (
+        <div class="brand-item flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 cursor-pointer">
+          <img 
+            src={brand.img} 
+            alt={`Logo de ${brand.name}`} 
+            class="object-contain w-full h-full"
+          />
+        </div>
+      ))}
+
+    </div>
+  </div>
+
+</section>
+
+<style>
+  /* --- 1. LAYOUT Y ESPACIADO --- */
+  .brands-padding {
+    padding-top: 8vh;
+    padding-bottom: 8vh;
+  }
+
+  .fluid-subtitle {
+    font-size: clamp(0.7rem, 2.5vw, 0.9rem); /* Móvil */
+  }
+
+  /* --- 2. TAMAÑO DE LOGOS FLUIDO --- */
+  .brand-item {
+    /* Móvil: Logos grandecitos */
+    width: 25vw;
+    height: 10vh;
+  }
+
+  /* --- 3. ANIMACIÓN INFINITA --- */
+  .slide-track {
+    /* Calculamos el ancho: Son 14 logos aprox (7x2).
+       La animación moverá todo hacia la izquierda infinitamente. */
+    width: max-content;
+    animation: scroll 30s linear infinite;
+  }
+
+  /* Pausar animación si el usuario pone el mouse encima */
+  .slider:hover .slide-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Se mueve la mitad (el set original) y se reinicia */
+  }
+
+  /* Degradado Negro a Transparente a Negro */
+  .fade-mask {
+    background: linear-gradient(
+      90deg, 
+      rgba(0,0,0,1) 0%, 
+      rgba(0,0,0,0) 10%, 
+      rgba(0,0,0,0) 90%, 
+      rgba(0,0,0,1) 100%
+    );
+  }
+
+  /* --- MEDIA QUERY: ESCRITORIO (1025px+) --- */
+  @media (min-width: 1025px) {
+    .brands-padding {
+      padding-top: 10vh;
+      padding-bottom: 10vh;
+    }
+
+    .fluid-subtitle {
+      font-size: 0.75vw;
+    }
+
+    .brand-item {
+      /* PC: Logos más discretos y elegantes */
+      width: 10vw; 
+      height: 12vh;
+    }
+  }
+</style>

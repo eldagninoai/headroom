@@ -1,0 +1,130 @@
+---
+// src/components/Philosophy.astro
+
+const philosophyImage = "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?q=80&w=2070&auto=format&fit=crop";
+
+const tags = [
+  "Eventos en Vivo", 
+  "Post-Producción", 
+  "Social Media", 
+  "Podcasts"
+];
+---
+
+<section class="relative w-full bg-black text-white philosophy-padding overflow-hidden">
+  
+  <div class="w-full philosophy-container-padding">
+    
+    <div class="flex flex-col min-[1025px]:flex-row gap-[8vw] min-[1025px]:gap-[5vw] items-center">
+      
+      <div class="w-full min-[1025px]:w-1/2">
+        <div class="image-wrapper relative grayscale hover:grayscale-0 transition-all duration-700 ease-out group">
+            <img 
+              src={philosophyImage} 
+              alt="Ingeniería de Audio Profesional" 
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            />
+            <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500"></div>
+        </div>
+      </div>
+
+      <div class="w-full min-[1025px]:w-1/2 flex flex-col justify-center items-center text-center min-[1025px]:items-start min-[1025px]:text-left">
+        
+        <h2 class="font-jost font-black uppercase leading-[0.95] mb-[3vh] fluid-h2 text-white">
+          El audio es el <span class="text-[#F1EE14]">50%</span> <br>
+          de la experiencia.
+        </h2>
+
+        <p class="font-mono text-gray-400 mb-[4vh] fluid-p leading-relaxed max-w-[90%] min-[1025px]:max-w-none">
+          A menudo es lo último en lo que se piensa, pero lo primero que se siente. 
+          Ya sea una fiesta, un video para YouTube o una campaña masiva, 
+          <span class="text-white font-bold">la calidad sonora distingue a los profesionales de los amateurs.</span>
+          Invertir en precisión acústica lleva tu proyecto al siguiente nivel.
+        </p>
+
+        <div class="flex flex-wrap justify-center min-[1025px]:justify-start gap-3 mb-[5vh]">
+          {tags.map(tag => (
+            <span class="border border-gray-800 text-gray-500 px-4 py-2 rounded-full fluid-tag font-mono uppercase tracking-wider hover:border-[#F1EE14] hover:text-[#F1EE14] transition-colors cursor-default">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <a href="#contacto" class="inline-block border-b-2 border-[#F1EE14] pb-1 text-[#F1EE14] font-bold uppercase tracking-widest hover:text-white hover:border-white transition-all fluid-btn">
+          Eleva tu Estándar &rarr;
+        </a>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  /* --- 1. MÓVIL/IPAD (Por defecto) --- */
+  .philosophy-padding {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+  .philosophy-container-padding {
+    padding-left: 6vw;  
+    padding-right: 6vw;
+  }
+
+  /* Tipografía Móvil */
+  .fluid-h2 {
+    font-size: 10vw; /* Sin límites, igual que Hero */
+  }
+  .fluid-p {
+    font-size: 3.5vw;
+  }
+  .fluid-tag {
+    font-size: 2.5vw;
+  }
+  .fluid-btn {
+    font-size: 3.5vw;
+  }
+
+  /* Imagen Móvil */
+  .image-wrapper {
+    width: 100%;
+    height: 60vw;
+    border-radius: 0.75rem;
+    overflow: hidden;
+  }
+
+  /* --- 2. ESCRITORIO (1025px en adelante) --- */
+  @media (min-width: 1025px) {
+    
+    .philosophy-padding {
+      padding-top: 15vh;
+      padding-bottom: 15vh;
+    }
+    
+    .philosophy-container-padding {
+      padding-left: 4.2vw; /* Alineado con Hero */
+      padding-right: 4.2vw;
+    }
+
+    /* Tipografía Escritorio (AHORA SÍ ESCALA INFINITO) */
+    .fluid-h2 { 
+        /* Antes tenía un tope de 6rem. Ahora le puse 50rem (básicamente infinito) */
+        font-size: clamp(3rem, 5vw, 50rem); 
+    }
+    .fluid-p { 
+        font-size: clamp(1rem, 1.1vw, 10rem); 
+    }
+    .fluid-tag {
+        font-size: clamp(0.7rem, 0.75vw, 5rem);
+    }
+    .fluid-btn { 
+        font-size: clamp(0.8rem, 0.85vw, 5rem); 
+    }
+
+    /* Imagen Escritorio */
+    .image-wrapper {
+      height: 35vw; 
+      border-radius: 1vw;
+    }
+  }
+</style>

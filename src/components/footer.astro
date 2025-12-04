@@ -1,9 +1,111 @@
-<footer class="w-full bg-[#F1EE14] py-16 md:py-24 mt-20 relative group cursor-pointer overflow-hidden">
+---
+// src/components/Footer.astro
+
+const currentYear = new Date().getFullYear();
+
+const links = [
+  { name: "Inicio", href: "/" },
+  { name: "Nosotros", href: "/about" },
+  { name: "Servicios", href: "/#display-area" },
+  { name: "Blog", href: "/blog" },
+];
+
+const socials = [
+  { name: "Instagram", href: "#" },
+  { name: "LinkedIn", href: "#" },
+  { name: "Vimeo", href: "#" },
+];
+---
+
+<footer class="w-full bg-black text-white relative border-t border-gray-900">
+
+  <a href="mailto:hola@headroom.com" class="block w-full bg-[#F1EE14] py-[10vh] relative group cursor-pointer overflow-hidden text-black transition-colors">
     <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
     
-    <div class="max-w-screen-xl mx-auto px-5 text-center relative z-10">
-        <h2 class="text-3xl md:text-5xl lg:text-[6rem] leading-none font-black text-black tracking-tighter uppercase break-all">
-            HOLA@SONICLABS.COM
-        </h2>
+    <div class="relative z-10 text-center px-[6vw]">
+      <span class="font-mono text-sm uppercase tracking-widest mb-4 block">Inicia un proyecto</span>
+      <h2 class="font-jost font-black uppercase fluid-cta-text leading-none tracking-tighter">
+        HOLA@HEADROOM.COM
+      </h2>
     </div>
+  </a>
+
+  <div class="px-[6vw] min-[1025px]:px-[4.2vw] py-[10vh] grid grid-cols-1 min-[1025px]:grid-cols-4 gap-[8vw] min-[1025px]:gap-[2vw]">
+    
+    <div class="col-span-1 min-[1025px]:col-span-1">
+      <a href="/" class="font-jost font-black uppercase text-2xl tracking-tighter block mb-6">
+        Headroom<span class="text-[#F1EE14]">.</span>
+      </a>
+      <p class="font-mono text-gray-500 text-sm leading-relaxed max-w-[30ch]">
+        Agencia de ingeniería de audio y diseño sonoro para marcas que buscan impacto.
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-[#F1EE14] font-mono text-xs uppercase tracking-widest mb-6">Explora</h4>
+      <ul class="space-y-4 font-jost font-medium text-lg">
+        {links.map(link => (
+          <li>
+            <a href={link.href} class="hover:text-[#F1EE14] transition-colors">{link.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-[#F1EE14] font-mono text-xs uppercase tracking-widest mb-6">Social</h4>
+      <ul class="space-y-4 font-jost font-medium text-lg">
+        {socials.map(social => (
+          <li>
+            <a href={social.href} class="hover:text-[#F1EE14] transition-colors">{social.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h4 class="text-[#F1EE14] font-mono text-xs uppercase tracking-widest mb-6">Studio</h4>
+      <p class="font-mono text-gray-500 text-sm leading-relaxed mb-4">
+        Adolfo Prieto 1384<br>
+        Ciudad de México, CDMX<br>
+        CP 06100
+      </p>
+    </div>
+
+  </div>
+
+  <div class="border-t border-gray-900 px-[6vw] min-[1025px]:px-[4.2vw] py-6 flex flex-col min-[1025px]:flex-row justify-between items-center text-xs font-mono text-gray-600 uppercase tracking-wider">
+    
+    <div class="mb-4 min-[1025px]:mb-0 text-center min-[1025px]:text-left">
+      &copy; {currentYear} Headroom Sound Agency. Todos los derechos reservados.
+    </div>
+
+    <div class="flex items-center gap-1 group">
+      <span>Made by</span>
+      <a 
+        href="https://adlibs.com" 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        class="text-white font-bold hover:text-[#F1EE14] transition-colors flex items-center gap-1"
+      >
+        ADLIBS
+        <span class="w-1 h-1 bg-[#F1EE14] rounded-full inline-block group-hover:scale-150 transition-transform"></span>
+      </a>
+    </div>
+
+  </div>
+
 </footer>
+
+<style>
+  /* Tipografía Fluida para el CTA Gigante */
+  .fluid-cta-text {
+    font-size: clamp(2rem, 8vw, 8rem); /* Responsivo total */
+  }
+  
+  @media (min-width: 1025px) {
+    .fluid-cta-text {
+        font-size: clamp(3rem, 6vw, 10rem);
+    }
+  }
+</style>
