@@ -26,3 +26,14 @@
     border-color: var(--color-gray-200, currentColor);
   }
 }
+
+/* TRUCO PARA IPHONE (iOS) */
+/* @supports (-webkit-touch-callout: none) es una regla que
+   solo entienden los dispositivos iOS (iPhone/iPad) */
+
+@supports (-webkit-touch-callout: none) {
+  /* Aumentamos el grosor de los textos en negrita solo para iPhone */
+  .font-bold, h1, h2, h3 {
+     font-weight: 800; /* Forzamos un peso extra (normalmente es 700) */
+  }
+}
