@@ -117,32 +117,66 @@ const menuItems = [
 </style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  const initNavbar = () => {
     const menuToggle = document.getElementById('menu-toggle');
     const navContent = document.getElementById('nav-content');
-    
-    // Toggle Menú Hamburguesa
-    menuToggle.addEventListener('click', () => {
+
+    // Validación de seguridad: Si no existen los elementos, no hacemos nada
+    if (!menuToggle || !navContent) return;
+
+    // --- 1. BOTÓN HAMBURGUESA (Clonamos SOLO el botón para limpiar eventos viejos) ---
+    const newToggle = menuToggle.cloneNode(true);
+    if (menuToggle.parentNode) {
+        menuToggle.parentNode.replaceChild(newToggle, menuToggle);
+    }
+
+    newToggle.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evitar que el clic llegue al fondo y lo cierre inmediatamente
       navContent.classList.toggle('hidden');
-      
+
       if (!navContent.classList.contains('hidden')) {
-        navContent.classList.add('h-screen', 'pb-20'); 
+        navContent.classList.add('h-screen', 'pb-20');
       } else {
         navContent.classList.remove('h-screen', 'pb-20');
       }
     });
 
-    // Toggle Dropdown en Móvil (Click)
+    // --- 2. DROPDOWNS (Clonamos sus triggers) ---
     const dropdownTriggers = document.querySelectorAll('.dropdown-trigger');
     dropdownTriggers.forEach(trigger => {
-        trigger.addEventListener('click', (e) => {
-            // CORRECCIÓN JS: Solo actuar si la pantalla es menor a 1025px
+        const newTrigger = trigger.cloneNode(true);
+        if (trigger.parentNode) {
+            trigger.parentNode.replaceChild(newTrigger, trigger);
+        }
+
+        newTrigger.addEventListener('click', (e) => {
             if (window.innerWidth < 1025) {
                 e.preventDefault();
-                const dropdown = trigger.nextElementSibling;
-                dropdown.classList.toggle('hidden');
+                e.stopPropagation(); // Importante: que no cierre el menú
+                const dropdown = newTrigger.nextElementSibling;
+                if (dropdown) dropdown.classList.toggle('hidden');
             }
         });
     });
-  });
+
+    // --- 3. CERRAR AL TOCAR FONDO O LINKS (Sin clonar el contenedor) ---
+    // Usamos 'onclick' directo para sobrescribir cualquier evento anterior automáticamente
+    navContent.onclick = (e) => {
+        // Solo en móvil
+        if (window.innerWidth >= 1025) return;
+
+        // Si tocaste un botón de dropdown, NO cierres
+        if (e.target.closest('.dropdown-trigger')) return;
+
+        // Si tocaste cualquier otra cosa (fondo negro o un link normal) -> CERRAR
+        navContent.classList.add('hidden');
+        navContent.classList.remove('h-screen', 'pb-20');
+    };
+  };
+
+  // Ejecutar al inicio
+  initNavbar();
+
+  // Ejecutar en cada navegación de Astro
+  document.addEventListener('astro:page-load', initNavbar);
 </script>
