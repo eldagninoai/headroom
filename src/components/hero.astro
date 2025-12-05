@@ -2,15 +2,27 @@
 // src/components/Hero.astro
 
 const services = [
-  { title: "SERVICE EQUALIZER", icon: "IlIl", active: true, category: "equalizer", suggested: false },
-  { title: "PRODUCCIÓN VIDEO", icon: "📹", active: false, category: "video", suggested: true },
-  { title: "DISEÑO SONORO", icon: "🔊", active: false, category: "sonido", suggested: false },
-  { title: "MÚSICA & BRANDING", icon: "🎵", active: false, category: "musica", suggested: false },
+  { title: "AUDIO EVENTOS", icon: "🎤", active: false, category: "eventos", suggested: false },
+  { title: "PRODUCCIÓN", icon: "🎚️", active: false, category: "produccion", suggested: false },
+  { title: "POST-PRODUCCIÓN", icon: "🎬", active: false, category: "post", suggested: false },
+  { title: "MANAGEMENT", icon: "🤝", active: false, category: "management", suggested: false },
 ];
 
-const activeStyle = "bg-[#F1EE14] border-[#F1EE14] text-black shadow-[0_0_25px_rgba(241,238,20,0.6)]";
-const inactiveStyle = "bg-transparent border-gray-800 text-gray-500 hover:border-[#F1EE14] hover:bg-gray-900 hover:text-white";
+const activeClassesString = "bg-[#F1EE14] border-[#F1EE14] text-black shadow-[0_0_25px_rgba(241,238,20,0.6)]";
+const inactiveClassesString = "bg-transparent border-gray-800 text-gray-500 hover:border-[#F1EE14] hover:bg-gray-900 hover:text-white";
 ---
+
+<script is:inline>
+  // Verificamos si es un regreso o refresh
+  const hasVisited = sessionStorage.getItem('selectedCategory');
+  
+  if (hasVisited) {
+    // Si ya visitó, añadimos una clase al HTML para BLOQUEAR animaciones de entrada
+    document.documentElement.classList.add('hero-no-animation');
+  } else {
+    document.documentElement.classList.remove('hero-no-animation');
+  }
+</script>
 
 <section class="relative w-full overflow-hidden hero-padding">
   
@@ -20,45 +32,39 @@ const inactiveStyle = "bg-transparent border-gray-800 text-gray-500 hover:border
       
       <div class="relative z-10 flex flex-col justify-center items-center text-center min-[1025px]:items-start min-[1025px]:text-left">
         
-        <h1 class="font-jost font-black uppercase leading-[0.9] text-white mb-[3vh] hero-title">
+        <h1 class="font-jost font-black uppercase leading-[0.9] text-white mb-[3vh] hero-title animate-entry" style="--delay: 0ms">
           Agencia de Audio<br/>
           <span class="font-black text-gray-600">Profesional</span>
         </h1>
         
-        <p class="font-mono text-gray-400 mb-[4vh] tracking-wide hero-desc">
+        <p class="font-mono text-gray-400 mb-[4vh] tracking-wide hero-desc animate-entry" style="--delay: 100ms">
           IDENTIDAD SONORA Y VISUAL PARA MARCAS LÍDERES.
         </p>
 
-        <div>
-            <a href="#contacto" class="inline-block bg-[#F1EE14] hover:bg-white hover:scale-105 transform text-black font-bold uppercase tracking-wider py-[1.5vh] px-[6vw] min-[1025px]:py-[2vh] min-[1025px]:px-[3vw] hero-btn transition-all duration-300 shadow-[0_0_20px_rgba(241,238,20,0.4)]">
-            Explora el Espectro &rarr;
+        <div class="animate-entry" style="--delay: 200ms">
+            <a href="#contacto" class="inline-block bg-[#F1EE14] rounded-xl hover:bg-white hover:scale-105 transform text-black font-bold uppercase tracking-wider py-[1.5vh] px-[6vw] min-[1025px]:py-[2vh] min-[1025px]:px-[3vw] hero-btn transition-all duration-300 shadow-[0_0_20px_rgba(241,238,20,0.4)]">
+            ¿Por qué audio? &rarr;
             </a>
         </div>
       </div>
 
       <div class="relative z-10 w-full mt-[6vh] min-[1025px]:mt-0">
-        
-        <h3 class="font-mono text-gray-400 uppercase tracking-[0.2em] mb-[4vh] text-center min-[1025px]:text-left border-b border-gray-800 pb-[2vh] hero-subtitle">
-          Service Equalizer
+        <h3 class="font-mono text-gray-400 uppercase tracking-[0.2em] mb-[4vh] text-center min-[1025px]:text-left border-b border-gray-800 pb-[2vh] hero-subtitle animate-entry" style="--delay: 300ms">
+          Servicios
         </h3>
         
-        <div class="flex justify-between gap-[2vw] min-[1025px]:gap-[1vw]">
+        <div id="hero-circles-container" class="flex justify-between gap-[2vw] min-[1025px]:gap-[1vw]" style="opacity: 0; transition: opacity 0.2s ease-out;">
           {services.map((service) => (
             <button 
               class="flex flex-col items-center group cursor-pointer w-full service-trigger bg-transparent border-none p-0" 
               data-category={service.category}
               type="button"
             >
-              <div class={`
-                hero-circle rounded-full flex items-center justify-center transition-all duration-300 border-2
-                ${service.active ? activeStyle : inactiveStyle}
-                ${service.suggested ? 'hint-animation' : ''}
-              `}>
+              <div class="hero-circle rounded-full flex items-center justify-center transition-all duration-300 border-2 bg-transparent border-gray-800 text-gray-500 hover:border-[#F1EE14] hover:bg-gray-900 hover:text-white">
                 <span class="hero-icon font-bold">
-                  {service.icon === "IlIl" ? "||||" : service.icon}
+                  {service.icon}
                 </span>
               </div>
-              
               <div class="mt-[2vh] text-center min-[1025px]:h-[3vw] flex items-start justify-center">
                  <span class="font-mono font-bold uppercase text-gray-500 group-hover:text-[#F1EE14] leading-tight hero-label">
                   {service.title}
@@ -67,7 +73,6 @@ const inactiveStyle = "bg-transparent border-gray-800 text-gray-500 hover:border
             </button>
           ))}
         </div>
-
       </div>
 
     </div>
@@ -75,104 +80,140 @@ const inactiveStyle = "bg-transparent border-gray-800 text-gray-500 hover:border
 </section>
 
 <style>
-  /* --- ESTILOS RESPONSIVOS --- */
-  
-  .hero-padding {
-    padding-top: 10vh;
-    padding-bottom: 0vh;
-  }
-  .hero-container-padding {
-    padding-left: 6vw;
-    padding-right: 6vw;
-  }
+  /* --- ESTILOS RESPONSIVOS BASE --- */
+  .hero-padding { padding-top: 18vh; padding-bottom: 0vh; }
+  .hero-container-padding { padding-left: 6vw; padding-right: 6vw; }
+  .hero-title { font-size: 13vw; }
+  .hero-desc { font-size: 3.5vw; max-width: 100%; }
+  .hero-btn { font-size: 3.5vw; }
+  .hero-subtitle { font-size: 3vw; }
+  .hero-circle { width: 20vw; height: 20vw; }
+  .hero-icon { font-size: 7vw; }
+  .hero-label { font-size: 2.2vw; display: block; width: 100%; }
 
-  /* MÓVIL (iPad Vertical incluido) */
-  .hero-title {
-    font-size: 13vw; 
-  }
-  .hero-desc {
-    font-size: 3.5vw;
-    max-width: 100%; 
-  }
-  .hero-btn {
-    font-size: 3.5vw;
-  }
-  .hero-subtitle {
-    font-size: 3vw;
-  }
-  .hero-circle {
-    width: 20vw;
-    height: 20vw;
-  }
-  .hero-icon {
-    font-size: 7vw;
-  }
-  .hero-label {
-    font-size: 2.2vw;
-    display: block;
-    width: 100%;
-  }
-
-  /* --- MEDIA QUERY: ESCRITORIO (1025px+) --- */
   @media (min-width: 1025px) {
-    
-    .hero-padding {
-      padding-top: 18vh;
-      padding-bottom: 15vh;
-    }
-    .hero-container-padding {
-      padding-left: 4.2vw;
-      padding-right: 4.2vw;
-    }
-
+    .hero-padding { padding-top: 18vh; padding-bottom: 15vh; }
+    .hero-container-padding { padding-left: 4.2vw; padding-right: 4.2vw; }
     .hero-title { font-size: 6.3vw; } 
     .hero-desc  { font-size: 0.85vw; max-width: 30vw; }
     .hero-btn   { font-size: 0.75vw; }
     .hero-subtitle { font-size: 0.65vw; }
-
-    .hero-circle {
-      width: 8.35vw;
-      height: 8.35vw;
-    }
+    .hero-circle { width: 8.35vw; height: 8.35vw; }
     .hero-icon { font-size: 2.5vw; }
-    
-    .hero-label {
-      font-size: 0.65vw;
-      width: 6vw;
-    }
+    .hero-label { font-size: 0.65vw; width: 6vw; }
   }
 
-  /* --- ANIMACIONES --- */
+  /* --- ANIMACIONES DE ENTRADA (Texto) --- */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Por defecto, animamos */
+  .animate-entry {
+    opacity: 0; /* Empieza invisible */
+    animation: fadeInUp 0.8s ease-out forwards;
+    animation-delay: var(--delay);
+  }
+
+  /* SI YA VISITÓ (Clase inyectada por el script de arriba): ANULAMOS ANIMACIÓN */
+  :global(.hero-no-animation) .animate-entry {
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* --- ANIMACIONES INTERACTIVAS (Palpitar) --- */
   @keyframes pulse-yellow {
     0% { transform: scale(1); box-shadow: 0 0 0 rgba(241, 238, 20, 0); border-color: #1f2937; }
     50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(241, 238, 20, 0.5); border-color: #F1EE14; color: #FFF; }
     100% { transform: scale(1); box-shadow: 0 0 0 rgba(241, 238, 20, 0); border-color: #1f2937; }
   }
-
   .hint-animation { animation: pulse-yellow 2s infinite ease-in-out; }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const buttons = document.querySelectorAll('.service-trigger');
+<script is:inline>
+    // Variables de estilo
     const activeClasses = ['bg-[#F1EE14]', 'border-[#F1EE14]', 'shadow-[0_0_25px_rgba(241,238,20,0.6)]', 'text-black'];
     const inactiveClasses = ['bg-transparent', 'border-gray-800', 'text-gray-500', 'hover:border-[#F1EE14]', 'hover:bg-gray-900', 'hover:text-white'];
 
-    buttons.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        const animatedEl = document.querySelector('.hint-animation');
-        if (animatedEl) { animatedEl.classList.remove('hint-animation'); animatedEl.style.animation = 'none'; }
+    (function initHeroState() {
+        const savedCategory = sessionStorage.getItem('selectedCategory');
+        let targetCategory = 'eventos'; // Default
+        let shouldHint = true;
 
-        const clickedCircle = btn.querySelector('.hero-circle'); 
-        if (!clickedCircle) return;
+        if (savedCategory) {
+            targetCategory = savedCategory;
+            shouldHint = false; // Si ya visitó, no palpitamos sugerencias
+        }
 
-        buttons.forEach(otherBtn => {
-            const circle = otherBtn.querySelector('.hero-circle');
-            if(circle) { circle.classList.remove(...activeClasses); circle.classList.add(...inactiveClasses); }
+        const buttons = document.querySelectorAll('.service-trigger');
+        const targetBtn = document.querySelector(`.service-trigger[data-category="${targetCategory}"]`);
+        
+        // 1. Limpieza rápida
+        buttons.forEach(btn => {
+            const circle = btn.querySelector('.hero-circle');
+            if(circle) {
+                circle.classList.remove(...activeClasses);
+                circle.classList.add(...inactiveClasses);
+                circle.parentElement.classList.remove('hint-animation');
+                circle.parentElement.style.animation = 'none';
+            }
         });
 
-        clickedCircle.classList.remove(...inactiveClasses); clickedCircle.classList.add(...activeClasses);
-      });
+        // 2. Activar el correcto
+        if (targetBtn) {
+            const activeCircle = targetBtn.querySelector('.hero-circle');
+            if(activeCircle) {
+                activeCircle.classList.remove(...inactiveClasses);
+                activeCircle.classList.add(...activeClasses);
+            }
+        }
+
+        // 3. Activar Palpitar (Solo si es nuevo)
+        if(shouldHint) {
+            const prodBtn = document.querySelector(`.service-trigger[data-category="produccion"]`);
+            if(prodBtn) {
+                const prodCircle = prodBtn.querySelector('.hero-circle');
+                if(prodCircle) prodCircle.classList.add('hint-animation');
+            }
+        }
+
+        // 4. LEVANTAR CORTINA DE CÍRCULOS
+        // Hacemos visible el contenedor de círculos ahora que ya están pintados correctamente
+        const container = document.getElementById('hero-circles-container');
+        if(container) {
+            container.style.opacity = '1';
+        }
+
+    })();
+
+    // LISTENERS DE CLIC (Para guardar memoria)
+    const heroButtons = document.querySelectorAll('.service-trigger');
+    heroButtons.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+            const clickedBtn = btn.closest('.service-trigger');
+            if (!clickedBtn) return;
+
+            // Limpieza visual
+            heroButtons.forEach(b => {
+                const c = b.querySelector('.hero-circle');
+                const a = b.querySelector('.hint-animation');
+                if(c) { c.classList.remove(...activeClasses); c.classList.add(...inactiveClasses); }
+                if(a) { a.classList.remove('hint-animation'); a.style.animation = 'none'; }
+            });
+
+            // Activar
+            const activeCircle = clickedBtn.querySelector('.hero-circle');
+            if(activeCircle) {
+                activeCircle.classList.remove(...inactiveClasses);
+                activeCircle.classList.add(...activeClasses);
+            }
+            
+            // Guardar
+            const category = clickedBtn.getAttribute('data-category');
+            sessionStorage.setItem('selectedCategory', category);
+        });
     });
-  });
 </script>

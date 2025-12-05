@@ -2,7 +2,10 @@
 import { SEO } from "astro-seo";
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
-import '@fontsource-variable/jost';
+
+/* IMPORTANTE: Quitamos '@fontsource-variable/jost' para usar la versión estática.
+   Mantenemos los demás imports que sí funcionan bien.
+*/
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource/montserrat/900.css";
@@ -16,17 +19,9 @@ export interface Props {
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
-
-const resolvedImageWithDomain = new URL(
-  "https://headroomsound.netlify.app/LogoHeadroomNegro.png",
-  Astro.site
-).toString();
-
+const resolvedImageWithDomain = "https://headroomsound.netlify.app/LogoHeadroomNegro.png";
 const { title } = Astro.props;
-
-const makeTitle = title
-  ? title + " | " + "Headroom"
-  : "Headroom - Soluciones de Audio";
+const makeTitle = title ? title + " | " + "Headroom" : "Headroom - Soluciones de Audio";
 ---
 
 <!doctype html>
@@ -36,11 +31,11 @@ const makeTitle = title
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
     <SEO
       title={makeTitle}
       description="Soluciones de audio"
@@ -63,21 +58,32 @@ const makeTitle = title
       }}
     />
   </head>
-    <body class="bg-black text-white">
+  <body class="bg-black text-white">
     <Navbar />
     <slot />
     <Footer />
-<style is:global>
-  /* ... tus otros estilos ... */
-  
-  /* Esto cambia la fuente de todo el sitio a Jost */
-  html, body {
-    font-family: 'Jost Variable', sans-serif;
-  }
-  
-  img {
-    content-visibility: auto;
-  }
-</style>
+    
+    <style is:global>
+      /* Configuración Base */
+      html, body {
+        /* CAMBIO: Usamos 'Jost' (la estática) en vez de 'Jost Variable' */
+        font-family: 'Jost', sans-serif; 
+        
+        /* Esto ayuda a limpiar los bordes en iOS */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      img { content-visibility: auto; }
+
+      /* REFUERZO DE SEGURIDAD */
+      /* Nos aseguramos de que las clases de Tailwind usen los números exactos */
+      .font-bold, strong, b { font-weight: 700; }
+      .font-black { font-weight: 900; }
+      
+      h1 { font-weight: 900; }
+      h2, h3, h4 { font-weight: 700; }
+
+    </style>
   </body>
 </html>

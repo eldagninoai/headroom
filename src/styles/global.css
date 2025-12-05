@@ -1,21 +1,32 @@
 @import 'tailwindcss';
-
 @plugin '@tailwindcss/typography';
 
+/* Este pequeño ajuste sí te recomiendo dejarlo. 
+  Evita que el iPhone cambie el tamaño de letra al girar la pantalla, 
+  pero NO afecta el grosor ni el diseño.
+*/
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
 @theme {
+  /* Aquí definimos que 'Jost Variable' es la prioridad.
+     Coincide con el import de @fontsource-variable/jost en tu Layout.
+  */
   --font-sans:
-    Bricolage Grotesque Variable, Inter Variable, Inter, ui-sans-serif,
-    system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
+    'Jost Variable', 
+    'Jost',
+    Bricolage Grotesque Variable, 
+    Inter Variable, 
+    Inter, 
+    ui-sans-serif,
+    system-ui, 
+    sans-serif;
 }
 
 /*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
+  Compatibilidad estándar para bordes en Tailwind v4.
+  Esto venía en tu plantilla original.
 */
 @layer base {
   *,
@@ -24,16 +35,5 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-/* TRUCO PARA IPHONE (iOS) */
-/* @supports (-webkit-touch-callout: none) es una regla que
-   solo entienden los dispositivos iOS (iPhone/iPad) */
-
-@supports (-webkit-touch-callout: none) {
-  /* Aumentamos el grosor de los textos en negrita solo para iPhone */
-  .font-bold, h1, h2, h3 {
-     font-weight: 800; /* Forzamos un peso extra (normalmente es 700) */
   }
 }
