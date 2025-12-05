@@ -1,111 +1,114 @@
 ---
-// src/components/Footer.astro
-
 const currentYear = new Date().getFullYear();
-
-const links = [
-  { name: "Inicio", href: "/" },
-  { name: "Nosotros", href: "/about" },
-  { name: "Servicios", href: "/#display-area" },
-  { name: "Blog", href: "/blog" },
-];
-
-const socials = [
-  { name: "Instagram", href: "#" },
-  { name: "LinkedIn", href: "#" },
-  { name: "Vimeo", href: "#" },
-];
 ---
 
-<footer class="w-full bg-black text-white relative border-t border-gray-900">
-
-  <a href="mailto:hola@headroom.com" class="block w-full bg-[#F1EE14] py-[10vh] relative group cursor-pointer overflow-hidden text-black transition-colors">
-    <div class="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-in-out"></div>
-    
-    <div class="relative z-10 text-center px-[6vw]">
-      <span class="font-mono text-sm uppercase tracking-widest mb-4 block">Inicia un proyecto</span>
-      <h2 class="font-jost font-black uppercase fluid-cta-text leading-none tracking-tighter">
-        HOLA@HEADROOM.COM
-      </h2>
-    </div>
-  </a>
-
-  <div class="px-[6vw] min-[1025px]:px-[4.2vw] py-[10vh] grid grid-cols-1 min-[1025px]:grid-cols-4 gap-[8vw] min-[1025px]:gap-[2vw]">
-    
-    <div class="col-span-1 min-[1025px]:col-span-1">
-      <a href="/" class="font-jost font-black uppercase text-2xl tracking-tighter block mb-6">
-        Headroom<span class="text-[#F1EE14]">.</span>
-      </a>
-      <p class="font-mono text-gray-500 text-sm leading-relaxed max-w-[30ch]">
-        Agencia de ingeniería de audio y diseño sonoro para marcas que buscan impacto.
-      </p>
-    </div>
-
-    <div>
-      <h4 class="text-[#F1EE14] font-mono text-xs uppercase tracking-widest mb-6">Explora</h4>
-      <ul class="space-y-4 font-jost font-medium text-lg">
-        {links.map(link => (
-          <li>
-            <a href={link.href} class="hover:text-[#F1EE14] transition-colors">{link.name}</a>
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="text-[#F1EE14] font-mono text-xs uppercase tracking-widest mb-6">Social</h4>
-      <ul class="space-y-4 font-jost font-medium text-lg">
-        {socials.map(social => (
-          <li>
-            <a href={social.href} class="hover:text-[#F1EE14] transition-colors">{social.name}</a>
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    <div>
-      <h4 class="text-[#F1EE14] font-mono text-xs uppercase tracking-widest mb-6">Studio</h4>
-      <p class="font-mono text-gray-500 text-sm leading-relaxed mb-4">
-        Adolfo Prieto 1384<br>
-        Ciudad de México, CDMX<br>
-        CP 06100
-      </p>
-    </div>
-
-  </div>
-
-  <div class="border-t border-gray-900 px-[6vw] min-[1025px]:px-[4.2vw] py-6 flex flex-col min-[1025px]:flex-row justify-between items-center text-xs font-mono text-gray-600 uppercase tracking-wider">
-    
-    <div class="mb-4 min-[1025px]:mb-0 text-center min-[1025px]:text-left">
-      &copy; {currentYear} Headroom Sound Agency. Todos los derechos reservados.
-    </div>
-
-    <div class="flex items-center gap-1 group">
-      <span>Made by</span>
-      <a 
-        href="https://adlibs.com" 
-        target="_blank" 
-        rel="noopener noreferrer" 
-        class="text-white font-bold hover:text-[#F1EE14] transition-colors flex items-center gap-1"
-      >
-        ADLIBS
-        <span class="w-1 h-1 bg-[#F1EE14] rounded-full inline-block group-hover:scale-150 transition-transform"></span>
-      </a>
-    </div>
-
-  </div>
-
-</footer>
-
-<style>
-  /* Tipografía Fluida para el CTA Gigante */
-  .fluid-cta-text {
-    font-size: clamp(2rem, 8vw, 8rem); /* Responsivo total */
-  }
+<footer class="bg-black text-white w-full border-t border-gray-900 overflow-hidden">
   
-  @media (min-width: 1025px) {
-    .fluid-cta-text {
-        font-size: clamp(3rem, 6vw, 10rem);
-    }
-  }
-</style>
+  <div class="mx-auto w-[90vw] py-[6vw] lg:py-[4vw]">
+    
+    <div class="grid grid-cols-2 xl:grid-cols-5 gap-x-[4vw] gap-y-[8vw] xl:gap-[2vw] mb-[8vw] xl:mb-[4vw]">
+      
+      <div class="col-span-2 xl:col-span-1 flex flex-col gap-[2vw] xl:gap-[1vw]">
+        <h2 class="font-bold text-yellow-500 leading-none text-[8vw] xl:text-[2.2vw]">
+          HEADROOM
+        </h2>
+        <p class="text-gray-400 font-light leading-relaxed text-[3.5vw] xl:text-[0.85vw] max-w-[80vw] xl:max-w-none">
+          Arquitectura sonora, producción y experiencias.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-[2vw] xl:gap-[1vw]">
+        <h3 class="font-bold text-white text-[4vw] xl:text-[1.1vw]">
+          Live Events
+        </h3>
+        <ul class="flex flex-col gap-[1.5vw] xl:gap-[0.5vw] text-gray-400 font-light text-[3vw] xl:text-[0.85vw]">
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Sonorización PA</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Iluminación</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Ingeniería FOH</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Backline</a></li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-[2vw] xl:gap-[1vw]">
+        <h3 class="font-bold text-white text-[4vw] xl:text-[1.1vw]">
+          Music Production
+        </h3>
+        <ul class="flex flex-col gap-[1.5vw] xl:gap-[0.5vw] text-gray-400 font-light text-[3vw] xl:text-[0.85vw]">
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Mezcla & Master</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Producción Vocal</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Beatmaking</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Arreglos</a></li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-[2vw] xl:gap-[1vw]">
+        <h3 class="font-bold text-white text-[4vw] xl:text-[1.1vw]">
+          Post-Production
+        </h3>
+        <ul class="flex flex-col gap-[1.5vw] xl:gap-[0.5vw] text-gray-400 font-light text-[3vw] xl:text-[0.85vw]">
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Diseño Sonoro</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Foley / SFX</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Mezcla Cine 5.1</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">ADR & Doblaje</a></li>
+        </ul>
+      </div>
+
+      <div class="flex flex-col gap-[2vw] xl:gap-[1vw]">
+        <h3 class="font-bold text-white text-[4vw] xl:text-[1.1vw]">
+          Management
+        </h3>
+        <ul class="flex flex-col gap-[1.5vw] xl:gap-[0.5vw] text-gray-400 font-light text-[3vw] xl:text-[0.85vw]">
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Distribución</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Estrategia</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Publishing</a></li>
+          <li><a href="#" class="hover:text-yellow-500 transition-colors">Consultoría</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="border-t border-gray-800 pt-[6vw] xl:pt-[3vw]">
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-[6vw] md:gap-[2vw]">
+        
+        <div class="flex flex-col gap-[1vw]">
+          <h4 class="font-bold text-white text-[4vw] md:text-[1.2vw] xl:text-[0.9vw]">Ubicación</h4>
+          <p class="text-gray-500 text-[3.5vw] md:text-[1.1vw] xl:text-[0.8vw]">
+            Del Valle Centro, Ciudad de México<br>
+            CDMX, 03100
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-[1vw]">
+          <h4 class="font-bold text-white text-[4vw] md:text-[1.2vw] xl:text-[0.9vw]">Contacto</h4>
+          <p class="text-gray-500 text-[3.5vw] md:text-[1.1vw] xl:text-[0.8vw]">
+            <a href="mailto:hola@headroom.mx" class="hover:text-white transition-colors">dagnox@gmail.mx</a><br>
+            <a href="tel:+525500000000" class="hover:text-white transition-colors">+52 (55) 3894-0290</a>
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-[2vw] md:gap-[1vw]">
+          <h4 class="font-bold text-white text-[4vw] md:text-[1.2vw] xl:text-[0.9vw]">Síguenos</h4>
+          <div class="flex gap-[3vw] md:gap-[1vw]">
+            <a href="#" class="w-[9vw] h-[9vw] md:w-[2.5vw] md:h-[2.5vw] rounded-full bg-gray-900 flex items-center justify-center hover:bg-yellow-500 hover:text-black transition-all">
+              <span class="font-bold text-[3vw] md:text-[0.8vw]">IG</span>
+            </a>
+            <a href="#" class="w-[9vw] h-[9vw] md:w-[2.5vw] md:h-[2.5vw] rounded-full bg-gray-900 flex items-center justify-center hover:bg-yellow-500 hover:text-black transition-all">
+              <span class="font-bold text-[3vw] md:text-[0.8vw]">LI</span>
+            </a>
+             <a href="#" class="w-[9vw] h-[9vw] md:w-[2.5vw] md:h-[2.5vw] rounded-full bg-gray-900 flex items-center justify-center hover:bg-yellow-500 hover:text-black transition-all">
+              <span class="font-bold text-[3vw] md:text-[0.8vw]">WA</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-[6vw] xl:mt-[3vw] text-center md:text-left text-[3vw] md:text-[0.8vw] text-gray-600">
+        &copy; {currentYear} Headroom Audio Services. Todos los derechos reservados.
+      </div>
+
+    </div>
+
+  </div>
+</footer>
